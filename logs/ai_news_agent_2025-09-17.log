@@ -1,0 +1,61 @@
+2025-09-17 22:16:46,463 - ai_news_agent - INFO - __init__:11 - Initialized News Scraper Service
+2025-09-17 22:16:46,544 - ai_news_agent - INFO - __init__:12 - Initialized LLM client with model: openai/gpt-oss-120b
+2025-09-17 22:16:46,544 - ai_news_agent - INFO - __init__:8 - Initialized Summarizer Service
+2025-09-17 22:16:46,545 - ai_news_agent - INFO - __init__:13 - Initialized embedding service with model: BAAI/bge-base-en-v1.5
+2025-09-17 22:31:32,573 - ai_news_agent - INFO - __init__:11 - Initialized News Scraper Service
+2025-09-17 22:31:32,659 - ai_news_agent - INFO - __init__:12 - Initialized LLM client with model: openai/gpt-oss-120b
+2025-09-17 22:31:32,660 - ai_news_agent - INFO - __init__:8 - Initialized Summarizer Service
+2025-09-17 22:31:32,660 - ai_news_agent - INFO - __init__:13 - Initialized embedding service with model: BAAI/bge-base-en-v1.5
+2025-09-17 22:33:46,736 - ai_news_agent - INFO - get_ai_news:129 - Processing news request: can you give me today latest AI news
+2025-09-17 22:33:46,740 - ai_news_agent - INFO - get_ai_news:134 - Parsed query: 'can you give me latest AI news', days_back: 1, specific_date: None
+2025-09-17 22:34:05,133 - ai_news_agent - INFO - search_ai_news:48 - Successfully scraped 5 AI news articles
+2025-09-17 22:34:44,871 - ai_news_agent - ERROR - generate_summary:49 - Error generating summary: 402 Client Error: Payment Required for url: https://router.huggingface.co/nebius/v1/chat/completions (Request ID: Root=1-68caea29-0fc338da6a4d7d3b21228c10;e947345a-bfa3-41e4-9bac-e82927960200)
+
+You have exceeded your monthly included credits for Inference Providers. Subscribe to PRO to get 20x more monthly included credits.
+2025-09-17 22:34:44,872 - ai_news_agent - INFO - process_news_articles:32 - Processed article: Amazon introduces agentic AI across the seller exp...
+2025-09-17 22:34:47,326 - ai_news_agent - ERROR - generate_summary:49 - Error generating summary: 402 Client Error: Payment Required for url: https://router.huggingface.co/nebius/v1/chat/completions (Request ID: Root=1-68caea2d-0baf5ba36f948b902ee05122;461106a5-e797-4dfc-a947-5b91304a5a68)
+
+You have exceeded your monthly included credits for Inference Providers. Subscribe to PRO to get 20x more monthly included credits.
+2025-09-17 22:34:47,326 - ai_news_agent - INFO - process_news_articles:32 - Processed article: US Adults Worry AI Will Make Us Worse at Being Hum...
+2025-09-17 22:34:52,612 - ai_news_agent - ERROR - generate_summary:49 - Error generating summary: 402 Client Error: Payment Required for url: https://router.huggingface.co/nebius/v1/chat/completions (Request ID: Root=1-68caea2f-3876713c74f1c89c5c6a2e46;068250f3-2f11-4244-8e90-d4756ec024f9)
+
+You have exceeded your monthly included credits for Inference Providers. Subscribe to PRO to get 20x more monthly included credits.
+2025-09-17 22:34:52,613 - ai_news_agent - INFO - process_news_articles:32 - Processed article: ☀️ What YOUTUBE's New AI Tools Mean for JOBS...
+2025-09-17 22:34:56,778 - ai_news_agent - ERROR - generate_summary:49 - Error generating summary: 402 Client Error: Payment Required for url: https://router.huggingface.co/nebius/v1/chat/completions (Request ID: Root=1-68caea35-32f59e842b0143ca3fc820b2;09b09c10-c379-45cc-870c-e837e61aab3a)
+
+You have exceeded your monthly included credits for Inference Providers. Subscribe to PRO to get 20x more monthly included credits.
+2025-09-17 22:34:56,778 - ai_news_agent - INFO - process_news_articles:32 - Processed article: An AI assistant can interpret those lab results fo...
+2025-09-17 22:35:02,101 - ai_news_agent - ERROR - generate_summary:49 - Error generating summary: 402 Client Error: Payment Required for url: https://router.huggingface.co/nebius/v1/chat/completions (Request ID: Root=1-68caea39-5dc1fba150bd64a47ffac05e;6f6d120f-d962-4146-9159-f8ec2eab8c66)
+
+You have exceeded your monthly included credits for Inference Providers. Subscribe to PRO to get 20x more monthly included credits.
+2025-09-17 22:35:02,102 - ai_news_agent - INFO - process_news_articles:32 - Processed article: Latest Political News Video, Politics Coverage and...
+2025-09-17 22:35:02,102 - ai_news_agent - INFO - process_news_articles:41 - Successfully processed 5 articles
+2025-09-17 22:35:25,199 - ai_news_agent - ERROR - get_embedding:27 - Error generating embedding: 402 Client Error: Payment Required for url: https://router.huggingface.co/hf-inference/models/BAAI/bge-base-en-v1.5/pipeline/feature-extraction (Request ID: Root=1-68caea52-2a545f231d4e183165d8b5ba;ccc3d5a2-8feb-4716-8a61-60c4b8627033)
+
+You have exceeded your monthly included credits for Inference Providers. Subscribe to PRO to get 20x more monthly included credits.
+2025-09-17 22:35:25,200 - ai_news_agent - ERROR - get_embeddings_batch:38 - Failed to get embedding for text: Amazon introduces agentic AI across the seller exp...
+2025-09-17 22:35:28,410 - ai_news_agent - ERROR - get_embedding:27 - Error generating embedding: 402 Client Error: Payment Required for url: https://router.huggingface.co/hf-inference/models/BAAI/bge-base-en-v1.5/pipeline/feature-extraction (Request ID: Root=1-68caea55-544eba7100df1fc75b4a4931;cb06dc9c-ed7e-40fe-ad70-d062e8b1c669)
+
+You have exceeded your monthly included credits for Inference Providers. Subscribe to PRO to get 20x more monthly included credits.
+2025-09-17 22:35:28,410 - ai_news_agent - ERROR - get_embeddings_batch:38 - Failed to get embedding for text: US Adults Worry AI Will Make Us Worse at Being Hum...
+2025-09-17 22:35:33,674 - ai_news_agent - ERROR - get_embedding:27 - Error generating embedding: 402 Client Error: Payment Required for url: https://router.huggingface.co/hf-inference/models/BAAI/bge-base-en-v1.5/pipeline/feature-extraction (Request ID: Root=1-68caea58-1d130900655050b6282fc54d;4b1299cc-cea3-4cc1-898e-588bc57ca62c)
+
+You have exceeded your monthly included credits for Inference Providers. Subscribe to PRO to get 20x more monthly included credits.
+2025-09-17 22:35:33,675 - ai_news_agent - ERROR - get_embeddings_batch:38 - Failed to get embedding for text: ☀️ What YOUTUBE's New AI Tools Mean for JOBS Summa...
+2025-09-17 22:35:40,239 - ai_news_agent - ERROR - get_embedding:27 - Error generating embedding: 402 Client Error: Payment Required for url: https://router.huggingface.co/hf-inference/models/BAAI/bge-base-en-v1.5/pipeline/feature-extraction (Request ID: Root=1-68caea5e-107e48097173ceb7662303de;c482c59b-7cb6-4721-abdf-52060a2c2d4d)
+
+You have exceeded your monthly included credits for Inference Providers. Subscribe to PRO to get 20x more monthly included credits.
+2025-09-17 22:35:40,239 - ai_news_agent - ERROR - get_embeddings_batch:38 - Failed to get embedding for text: An AI assistant can interpret those lab results fo...
+2025-09-17 22:35:49,552 - ai_news_agent - ERROR - get_embedding:27 - Error generating embedding: 402 Client Error: Payment Required for url: https://router.huggingface.co/hf-inference/models/BAAI/bge-base-en-v1.5/pipeline/feature-extraction (Request ID: Root=1-68caea64-09e0de9f0d4a6e0b5c7d19de;b0130633-93fb-4a95-a819-12bde26fe374)
+
+You have exceeded your monthly included credits for Inference Providers. Subscribe to PRO to get 20x more monthly included credits.
+2025-09-17 22:35:49,552 - ai_news_agent - ERROR - get_embeddings_batch:38 - Failed to get embedding for text: Latest Political News Video, Politics Coverage and...
+2025-09-17 22:35:49,552 - ai_news_agent - INFO - _ensure_initialized:52 - ChromaDB API Key present: Yes
+2025-09-17 22:35:49,553 - ai_news_agent - INFO - _ensure_initialized:53 - ChromaDB Tenant: '276f3ff7-474e-456c-9dd9-4d6b017508e5'
+2025-09-17 22:35:49,553 - ai_news_agent - INFO - _ensure_initialized:54 - ChromaDB Tenant length: 36
+2025-09-17 22:35:49,553 - ai_news_agent - INFO - _ensure_initialized:55 - ChromaDB Database: 'news_agent'
+2025-09-17 22:35:49,553 - ai_news_agent - INFO - _ensure_initialized:69 - Attempting to connect to ChromaDB...
+2025-09-17 22:36:40,374 - ai_news_agent - INFO - _ensure_initialized:78 - ✅ Successfully connected with explicit parameters
+2025-09-17 22:36:47,186 - ai_news_agent - INFO - _ensure_initialized:98 - 🎉 Successfully initialized ChromaDB service
+2025-09-17 22:36:51,572 - ai_news_agent - INFO - store_articles:147 - Successfully stored 5 articles in ChromaDB
+2025-09-17 22:36:51,573 - ai_news_agent - INFO - get_ai_news:170 - Successfully processed 5 news articles

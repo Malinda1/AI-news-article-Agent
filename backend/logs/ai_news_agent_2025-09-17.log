@@ -1,0 +1,4 @@
+2025-09-17 22:16:01,586 - ai_news_agent - INFO - __init__:11 - Initialized News Scraper Service
+2025-09-17 22:16:01,674 - ai_news_agent - INFO - __init__:12 - Initialized LLM client with model: openai/gpt-oss-120b
+2025-09-17 22:16:01,674 - ai_news_agent - INFO - __init__:8 - Initialized Summarizer Service
+2025-09-17 22:16:01,674 - ai_news_agent - INFO - __init__:13 - Initialized embedding service with model: BAAI/bge-base-en-v1.5

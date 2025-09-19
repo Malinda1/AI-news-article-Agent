@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TractorMind AI Agent</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #ffffff;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Left Panel - Controls */
+        .left-panel {
+            width: 350px;
+            background: rgba(30, 30, 50, 0.9);
+            backdrop-filter: blur(10px);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            background: linear-gradient(45deg, #00d4ff, #0099cc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 5px;
+        }
+
+        .logo p {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .features {
+            margin-bottom: 30px;
+        }
+
+        .features h3 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #00d4ff;
+        }
+
+        .feature-item {
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            font-size: 13px;
+            border-left: 3px solid #00d4ff;
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .upload-section {
+            margin-bottom: 20px;
+        }
+
+        .upload-section h3 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #00d4ff;
+        }
+
+        .upload-btn {
+            width: 100%;
+            padding: 12px;
+            background: rgba(0, 212, 255, 0.2);
+            border: 2px dashed #00d4ff;
+            border-radius: 10px;
+            color: #00d4ff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .upload-btn:hover {
+            background: rgba(0, 212, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            font-size: 12px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #00ff88;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Right Panel - Chat Interface */
+        .right-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: rgba(20, 20, 35, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .chat-header {
+            padding: 20px 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(30, 30, 50, 0.5);
+        }
+
+        .chat-header h2 {
+            font-size: 20px;
+            color: #ffffff;
+        }
+
+        .chat-header p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 5px;
+        }
+
+        .chat-container {
+            flex: 1;
+            padding: 20px 30px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.user {
+            align-self: flex-end;
+            max-width: 70%;
+        }
+
+        .message.ai {
+            align-self: flex-start;
+            max-width: 80%;
+        }
+
+        .message-content {
+            padding: 15px 20px;
+            border-radius: 15px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .message.user .message-content {
+            background: linear-gradient(135deg, #00d4ff, #0099cc);
+            color: #ffffff;
+            border-bottom-right-radius: 5px;
+        }
+
+        .message.ai .message-content {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-bottom-left-radius: 5px;
+        }
+
+        .typing-indicator {
+            display: none;
+            align-items: center;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            border-bottom-left-radius: 5px;
+            max-width: 80%;
+            margin-bottom: 20px;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-dots span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #00d4ff;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .data-table th {
+            background: rgba(0, 212, 255, 0.2);
+            color: #00d4ff;
+            font-weight: 600;
+        }
+
+        .data-table tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .input-container {
+            padding: 20px 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(30, 30, 50, 0.5);
+        }
+
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            padding: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .input-wrapper:focus-within {
+            border-color: #00d4ff;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .message-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #ffffff;
+            font-size: 14px;
+            padding: 12px 20px;
+            placeholder-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .message-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .send-btn {
+            background: linear-gradient(135deg, #00d4ff, #0099cc);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .send-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+        }
+
+        .send-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: #ffffff;
+        }
+
+        .voice-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .voice-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .voice-btn.active {
+            background: rgba(255, 0, 100, 0.3);
+            border-color: #ff0064;
+        }
+
+        .voice-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: #ffffff;
+        }
+
+        .welcome-message {
+            text-align: center;
+            padding: 40px 20px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .welcome-message h3 {
+            color: #00d4ff;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        .welcome-message p {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 212, 255, 0.5);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 212, 255, 0.7);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .left-panel {
+                width: 100%;
+                height: auto;
+                max-height: 200px;
+                overflow-y: auto;
+            }
+            
+            .right-panel {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Panel -->
+        <div class="left-panel">
+            <div class="logo">
+                <h1>🚜 TractorMind AI</h1>
+                <p>Your Intelligent Spare Parts Assistant</p>
+            </div>
+
+            <div class="features">
+                <h3>✨ Features</h3>
+                <div class="feature-item">📊 Excel File Upload & Processing</div>
+                <div class="feature-item">🔍 Quantity Checking & Monitoring</div>
+                <div class="feature-item">👥 Customer Details Management</div>
+                <div class="feature-item">📋 Status Updates & Tracking</div>
+                <div class="feature-item">🔊 Text-to-Speech Responses</div>
+                <div class="feature-item">💾 ChromaDB Vector Storage</div>
+            </div>
+
+            <div class="upload-section">
+                <h3>📁 Upload Excel File</h3>
+                <div class="upload-btn" onclick="document.getElementById('fileInput').click()">
+                    <span>📤 Click to Upload Spare Parts Data</span>
+                </div>
+                <input type="file" id="fileInput" accept=".xlsx,.xls" style="display: none;" onchange="handleFileUpload(event)">
+                
+                <div class="status-indicator">
+                    <div class="status-dot"></div>
+                    <span id="statusText">System Ready</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel -->
+        <div class="right-panel">
+            <div class="chat-header">
+                <h2>AI Assistant Chat</h2>
+                <p>Ask me anything about spare parts, customer details, or system operations</p>
+            </div>
+
+            <div class="chat-container" id="chatContainer">
+                <div class="welcome-message">
+                    <h3>👋 Welcome to TractorMind AI!</h3>
+                    <p>I'm your intelligent spare parts assistant. Here's what I can help you with:</p>
+                    <br>
+                    <p>• Upload and process Excel files with spare parts data</p>
+                    <p>• Check quantity levels and identify low stock items</p>
+                    <p>• View and manage customer details from Airtable</p>
+                    <p>• Update order statuses and track changes</p>
+                    <p>• Provide both text and audio responses</p>
+                    <br>
+                    <p>Just type your question or request below to get started! 🚀</p>
+                </div>
+                
+                <div class="typing-indicator" id="typingIndicator">
+                    <div class="typing-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <span style="margin-left: 10px;">TractorMind AI is thinking...</span>
+                </div>
+            </div>
+
+            <div class="input-container">
+                <div class="input-wrapper">
+                    <button class="voice-btn" id="voiceBtn" onclick="toggleVoiceInput()">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 1c-1.6 0-3 1.4-3 3v8c0 1.6 1.4 3 3 3s3-1.4 3-3V4c0-1.6-1.4-3-3-3zm5.3 9c0 3-2.54 5.1-5.3 5.1S6.7 13 6.7 10H5c0 3.41 2.72 6.23 6 6.72V21h2v-4.28c3.28-.49 6-3.31 6-6.72h-1.7z"/>
+                        </svg>
+                    </button>
+                    <input 
+                        type="text" 
+                        class="message-input" 
+                        id="messageInput" 
+                        placeholder="Type your message here... (e.g., 'Show customer details', 'Check low stock items', 'Upload excel file')"
+                        onkeypress="handleKeyPress(event)"
+                    >
+                    <button class="send-btn" onclick="sendMessage()">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isVoiceRecording = false;
+        let recognition = null;
+
+        // Initialize speech recognition if supported
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+            recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
+
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                document.getElementById('messageInput').value = transcript;
+                toggleVoiceInput();
+            };
+
+            recognition.onerror = function(event) {
+                console.log('Speech recognition error:', event.error);
+                toggleVoiceInput();
+            };
+        }
+
+        function toggleVoiceInput() {
+            const voiceBtn = document.getElementById('voiceBtn');
+            
+            if (!recognition) {
+                alert('Speech recognition not supported in this browser');
+                return;
+            }
+
+            if (isVoiceRecording) {
+                recognition.stop();
+                voiceBtn.classList.remove('active');
+                isVoiceRecording = false;
+            } else {
+                recognition.start();
+                voiceBtn.classList.add('active');
+                isVoiceRecording = true;
+            }
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const statusText = document.getElementById('statusText');
+                statusText.textContent = `Uploading ${file.name}...`;
+                
+                // Simulate file upload
+                setTimeout(() => {
+                    statusText.textContent = 'File uploaded successfully!';
+                    addMessage('user', `Uploaded file: ${file.name}`);
+                    
+                    setTimeout(() => {
+                        addMessage('ai', `✅ Successfully processed ${file.name}! The spare parts data has been uploaded to ChromaDB. I found ${Math.floor(Math.random() * 500) + 100} items in your inventory. Would you like me to check for low stock items or show you a summary?`);
+                    }, 1500);
+                    
+                    setTimeout(() => {
+                        statusText.textContent = 'System Ready';
+                    }, 3000);
+                }, 2000);
+            }
+        }
+
+        async function sendMessage() {
+            const messageInput = document.getElementById('messageInput');
+            const message = messageInput.value.trim();
+            
+            if (!message) return;
+
+            // Add user message
+            addMessage('user', message);
+            messageInput.value = '';
+
+            // Show typing indicator
+            showTypingIndicator();
+
+            // Simulate AI response with delay
+            setTimeout(async () => {
+                hideTypingIndicator();
+                const response = await generateAIResponse(message);
+                await typeMessage('ai', response);
+            }, 1000 + Math.random() * 2000);
+        }
+
+        function addMessage(sender, content) {
+            const chatContainer = document.getElementById('chatContainer');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            
+            if (content.includes('<table>')) {
+                messageDiv.innerHTML = `<div class="message-content">${content}</div>`;
+            } else {
+                messageDiv.innerHTML = `<div class="message-content">${content}</div>`;
+            }
+            
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        async function typeMessage(sender, content) {
+            const chatContainer = document.getElementById('chatContainer');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            messageDiv.appendChild(contentDiv);
+            chatContainer.appendChild(messageDiv);
+
+            // Type with delay like ChatGPT
+            let i = 0;
+            const typeSpeed = 30; // milliseconds per character
+
+            function typeChar() {
+                if (i < content.length) {
+                    contentDiv.innerHTML = content.substring(0, i + 1);
+                    i++;
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                    setTimeout(typeChar, typeSpeed);
+                }
+            }
+
+            typeChar();
+        }
+
+        function showTypingIndicator() {
+            const typingIndicator = document.getElementById('typingIndicator');
+            typingIndicator.style.display = 'flex';
+            const chatContainer = document.getElementById('chatContainer');
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            const typingIndicator = document.getElementById('typingIndicator');
+            typingIndicator.style.display = 'none';
+        }
+
+        async function generateAIResponse(message) {
+            const lowerMessage = message.toLowerCase();
+            
+            // Sample responses based on keywords
+            if (lowerMessage.includes('customer details') || lowerMessage.includes('show customer') || lowerMessage.includes('customer data')) {
+                return `📋 Here are the customer details from our Airtable database:
+
+<table class="data-table">
+<tr>
+<th>Order ID</th>
+<th>Name</th>
+<th>Phone</th>
+<th>Email</th>
+<th>City</th>
+<th>Status</th>
+<th>Date</th>
+<th>Spare Part</th>
+<th>Quantity</th>
+<th>Price</th>
+</tr>
+<tr><td>ORD001</td><td>John Smith</td><td>+1-555-0123</td><td>john@email.com</td><td>New York</td><td>Processing</td><td>2024-03-15</td><td>Engine Filter</td><td>2</td><td>$45.00</td></tr>
+<tr><td>ORD002</td><td>Sarah Johnson</td><td>+1-555-0456</td><td>sarah@email.com</td><td>Chicago</td><td>Pending</td><td>2024-03-16</td><td>Brake Pad</td><td>4</td><td>$120.00</td></tr>
+<tr><td>ORD003</td><td>Mike Davis</td><td>+1-555-0789</td><td>mike@email.com</td><td>Los Angeles</td><td>Completed</td><td>2024-03-14</td><td>Oil Filter</td><td>1</td><td>$25.00</td></tr>
+<tr><td>ORD004</td><td>Emily Brown</td><td>+1-555-0321</td><td>emily@email.com</td><td>Houston</td><td>Shipped</td><td>2024-03-13</td><td>Air Filter</td><td>3</td><td>$75.00</td></tr>
+</table>
+
+Is there anything specific you'd like me to help you with regarding these customer orders? I can update statuses, check specific orders, or provide more details.`;
+            }
+            
+            if (lowerMessage.includes('low stock') || lowerMessage.includes('quantity') || lowerMessage.includes('stock check')) {
+                return `⚠️ Stock Alert! Here are the spare parts with low quantity levels:
+
+• **Engine Filter EF-2024** - Only 3 remaining (ID: SP001)
+• **Brake Pads BP-Heavy** - 5 units left (ID: SP007)  
+• **Oil Seal OS-Standard** - 2 units remaining (ID: SP012)
+• **Transmission Fluid TF-Premium** - 4 bottles left (ID: SP019)
+• **Spark Plug SP-Platinum** - 6 pieces remaining (ID: SP023)
+
+Would you like me to:
+1. 📧 Send reorder alerts to suppliers
+2. 📊 Generate a detailed stock report
+3. 🔄 Update reorder quantities
+4. 📱 Notify the procurement team
+
+Just let me know how you'd like to proceed!`;
+            }
+            
+            if (lowerMessage.includes('status') && (lowerMessage.includes('update') || lowerMessage.includes('change'))) {
+                return `✅ I can help you update order statuses! Please provide the details in this format:
+
+**"Update order [ORDER_ID] status from [CURRENT_STATUS] to [NEW_STATUS]"**
+
+For example: "Update order ORD002 status from pending to processing"
+
+Available status options:
+• 🟡 Pending
+• 🔄 Processing  
+• 📦 Shipped
+• ✅ Completed
+• ❌ Cancelled
+• 🔄 On Hold
+
+Which order would you like me to update?`;
+            }
+
+            if (lowerMessage.includes('update order')) {
+                return `✅ Order status updated successfully! 
+
+**Order Details:**
+- Order ID: ORD002
+- Customer: Sarah Johnson
+- Previous Status: Pending → **New Status: Processing**
+- Updated: ${new Date().toLocaleString()}
+- Notification sent to: sarah@email.com
+
+The customer has been automatically notified about this status change. Is there anything else you'd like me to update?`;
+            }
+
+            if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('hey')) {
+                return `👋 Hello! I'm TractorMind AI, your intelligent spare parts assistant! 
+
+I'm here to help you with:
+
+🔹 **Excel File Management** - Upload and process spare parts inventory
+🔹 **Stock Monitoring** - Check quantities and identify low stock items  
+🔹 **Customer Management** - View and update customer order details
+🔹 **Status Updates** - Change order statuses and track progress
+🔹 **Data Retrieval** - Search and filter through your inventory database
+
+What would you like assistance with today? You can ask me things like:
+• "Show me customer details"
+• "Check low stock items" 
+• "Update order status"
+• "Upload inventory file"
+
+How can I help you manage your tractor spare parts business today? 🚜`;
+            }
+
+            // Default response
+            return `🤖 I understand you're asking about: "${message}"
+
+I'm TractorMind AI, and I can help you with:
+• 📊 Managing spare parts inventory
+• 👥 Customer order details  
+• 📈 Stock level monitoring
+• 🔄 Status updates
+• 📁 Excel file processing
+
+Could you please be more specific about what you'd like me to help you with? For example, you could ask me to "show customer details" or "check low stock items".`;
+        }
+
+        // Initialize welcome message
+        document.addEventListener('DOMContentLoaded', function() {
+            const welcomeExists = document.querySelector('.welcome-message');
+            if (welcomeExists) {
+                // Welcome message is already in HTML
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI News Agent</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-robot"></i>
+                    <h1>AI News Agent</h1>
+                </div>
+                <div class="status-indicator">
+                    <div class="status-dot" id="statusDot"></div>
+                    <span id="statusText">Ready</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Left Panel - Input Section -->
+            <div class="left-panel">
+                <div class="input-section">
+                    <h2><i class="fas fa-search"></i> Search AI News</h2>
+                    <div class="search-form">
+                        <div class="input-group">
+                            <input 
+                                type="text" 
+                                id="newsQuery" 
+                                placeholder="e.g., 'Today's latest AI news' or 'AI developments yesterday'"
+                                class="search-input"
+                            >
+                            <button id="searchBtn" class="search-btn">
+                                <i class="fas fa-search"></i>
+                                Search News
+                            </button>
+                        </div>
+                        <div class="quick-actions">
+                            <button class="quick-btn" data-query="Today's latest AI news">Today's News</button>
+                            <button class="quick-btn" data-query="Yesterday's AI developments">Yesterday</button>
+                            <button class="quick-btn" data-query="This week's AI breakthroughs">This Week</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question Section -->
+                <div class="question-section">
+                    <h2><i class="fas fa-question-circle"></i> Ask Questions</h2>
+                    <div class="question-form">
+                        <div class="input-group">
+                            <input 
+                                type="text" 
+                                id="questionInput" 
+                                placeholder="Ask questions about the news articles..."
+                                class="question-input"
+                                disabled
+                            >
+                            <button id="askBtn" class="ask-btn" disabled>
+                                <i class="fas fa-paper-plane"></i>
+                                Ask
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Panel -->
+                <div class="stats-panel">
+                    <div class="stat-item">
+                        <div class="stat-number" id="totalArticles">0</div>
+                        <div class="stat-label">Articles Found</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="lastUpdated">Never</div>
+                        <div class="stat-label">Last Updated</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel - Results Section -->
+            <div class="right-panel">
+                <div class="results-section">
+                    <div class="results-header">
+                        <h2><i class="fas fa-newspaper"></i> News Results</h2>
+                        <div class="loading-spinner" id="loadingSpinner">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </div>
+                    </div>
+
+                    <!-- Welcome Message -->
+                    <div class="welcome-message" id="welcomeMessage">
+                        <div class="welcome-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h3>Welcome to AI News Agent</h3>
+                        <p>Start by searching for the latest AI news using the search bar on the left. You can use natural language queries like:</p>
+                        <ul>
+                            <li>"Today's latest AI news"</li>
+                            <li>"AI developments yesterday"</li>
+                            <li>"Past week's AI breakthroughs"</li>
+                        </ul>
+                        <p>After getting news results, you can ask questions about the articles!</p>
+                    </div>
+
+                    <!-- News Articles Container -->
+                    <div class="news-container" id="newsContainer" style="display: none;">
+                    </div>
+
+                    <!-- Question Answer Container -->
+                    <div class="answer-container" id="answerContainer" style="display: none;">
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p>&copy; 2024 AI News Agent. Powered by FastAPI & AI</p>
+                <div class="footer-links">
+                    <span>Status: <span id="footerStatus">Ready</span></span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Error Modal -->
+    <div class="modal" id="errorModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-exclamation-triangle"></i> Error</h3>
+                <button class="close-btn" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body" id="errorMessage">
+                An error occurred while processing your request.
+            </div>
+        </div>
+    </div>
+
+    <script src="static/script.js"></script>
+</body>
+</html>

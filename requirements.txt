@@ -1,0 +1,47 @@
+
+chromadb
+python-multipart
+jinja2
+
+# Web Framework & API
+fastapi
+uvicorn
+httpx
+python-dotenv
+python-multipart
+loguru
+requests
+
+
+
+# Hugging Face & NLP
+huggingface-hub
+transformers
+datasets
+accelerate
+sentencepiece
+tokenizers
+sacremoses
+evaluate
+peft
+trl
+bitsandbytes
+
+# Core ML / DL
+torch
+torchvision
+torchaudio
+scipy
+numpy
+pandas
+
+# Visualization & Monitoring
+matplotlib
+seaborn
+tensorboard
+tqdm
+
+# Interactive / UI
+gradio
+pydantic
+aiofiles
